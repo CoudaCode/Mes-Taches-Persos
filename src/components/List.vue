@@ -1,21 +1,23 @@
 <script>
-        export default {
-            data(){
-                return {
-
-                }
-            },
-
-            props:["Title", "Description",]
-        }
+export default {
+  data() {
+    return {};
+  },
+  props: {
+    tache: {
+      type: Object,
+      required: true,
+    },
+  },
+};
 </script>
 <template>
   <div class="flex gap-5 w-4/5">
     <div class="flex w-3/5">
-      <input class="hidden" type="checkbox" id={{ Title }} checked />
+      <input class="hidden" type="checkbox" :id="tache.Title" />
       <label
         class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-900"
-        for={{ Title }}>
+        :for="tache.Title">
         <span
           class="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-500 rounded-full">
           <svg
@@ -29,7 +31,7 @@
               clip-rule="evenodd" />
           </svg>
         </span>
-        <span class="ml-4 text-sm">{{ Description }}</span>
+        <span class="ml-4 text-sm">{{ tache.Description }}</span>
       </label>
     </div>
     <div class="w-2/5 flex justify-end">

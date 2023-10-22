@@ -1,6 +1,7 @@
 <script>
-import List from "./List.vue";
+import List from './List.vue';
 export default {
+  components: { List },
   data() {
     return {
       taches: [
@@ -21,7 +22,7 @@ export default {
         <h4 class="font-semibold ml-3 text-lg">Mes Taches à faire</h4>
       </div>
       <div class="list">
-         <List></List>                  
+        <List v-for="tache in taches" :tache="tache" />    
                 <!-- <div class="flex gap-5 w-4/5">
           <div class="flex w-3/5">
             <input class="hidden" type="checkbox" id="task_6" checked />

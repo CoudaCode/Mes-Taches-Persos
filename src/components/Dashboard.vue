@@ -21,7 +21,7 @@ export default {
         <h4 class="font-semibold ml-3 text-lg">Mes Taches à faire</h4>
       </div>
       <div class="list">
-        t
+         <List></List>                  
                 <!-- <div class="flex gap-5 w-4/5">
           <div class="flex w-3/5">
             <input class="hidden" type="checkbox" id="task_6" checked />

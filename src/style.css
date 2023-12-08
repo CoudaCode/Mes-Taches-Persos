@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  color: #ffffffde;
-  background-color: #242424;
 }
 
 #app {

@@ -11,7 +11,7 @@ const routes = [
   },
   {
     title: "Register",
-    path: "/Register",
+    path: "/register",
     component: Register,
   },
   {
@@ -21,7 +21,7 @@ const routes = [
   },
   {
     title: "Dashboard",
-    path: "/Dashboard",
+    path: "/dashboard",
     component: Dashboard,
   },
   {

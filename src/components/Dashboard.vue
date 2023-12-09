@@ -220,7 +220,9 @@ export default {
               />
 
               <p class="ms-2 hidden text-left text-xs sm:block">
-                <strong class="block font-medium">Eric Frusciante</strong>
+                <strong class="block font-medium text-white"
+                  >Eric Frusciante</strong
+                >
 
                 <span class="text-gray-500"> eric@frusciante.com </span>
               </p>
@@ -242,13 +244,13 @@ export default {
         </div>
 
         <div class="mt-8">
-          <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-            Welcome Back, Barry!
+          <h1 class="text-2xl font-bold text-gray-100 sm:text-3xl">
+            Welcome back, Barry!
           </h1>
 
           <p class="mt-1.5 text-sm text-gray-500">
-            Your website has seen a 52% increase in traffic in the last month.
-            Keep it up! 🚀
+            Ajoutez vos nouvelles tâches ci-dessous et restez organisé au
+            quotidien.
           </p>
         </div>
       </div>

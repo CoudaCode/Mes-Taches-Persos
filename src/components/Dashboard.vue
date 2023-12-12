@@ -1,12 +1,14 @@
 <script>
 export default {
-  data() {
-    return {
-      taches: [
-        { Title: "coder", Description: "Bien coder" },
-        { Title: "manger", Description: "Bien manger" },
-      ],
-    };
+  setup() {
+    // Vérifiez si le cookie 'token' est présent dans la réponse
+    const token = response.headers["set-cookie"]
+      .find((cookie) => cookie.startsWith("token="))
+      .split(";")[0]
+      .split("=")[1];
+
+    console.log(token);
+    return {};
   },
 };
 </script>

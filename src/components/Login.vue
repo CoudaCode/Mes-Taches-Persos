@@ -1,7 +1,67 @@
 <script>
+import axios from "axios";
+import { ref } from "vue";
+import { link } from "./../assets/url.js";
+import { toast } from "vue3-toastify";
+import { useRouter } from "vue-router";
+import "vue3-toastify/dist/index.css";
 export default {
-  date() {
-    return {};
+  setup() {
+    const isLoading = ref(false);
+    const router = useRouter();
+    const dataUser = ref({
+      email: "",
+      password: "",
+    });
+
+    const submit = async () => {
+      try {
+        isLoading.value = true;
+        const { data } = await axios.post(
+          `${link}/api/users/login`,
+          dataUser.value,
+        );
+        console.log(data);
+        toastSuccess("Bien connecté");
+        dataUser.value = {
+          email: "",
+          password: "",
+        };
+        router.push("/dashboard");
+      } catch (error) {
+        console.error("Erreur lors de la requête axios :", error);
+
+        toastError("Une erreur est survenue");
+        isLoading.value = false;
+      } finally {
+        isLoading.value = false;
+      }
+    };
+    const toastConfig = {
+      position: "bottom-left",
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "orange",
+    };
+
+    const toastError = (message) => {
+      toast.error(message, toastConfig);
+    };
+
+    const toastSuccess = (message) => {
+      toast.success(message, toastConfig);
+    };
+
+    return {
+      dataUser,
+      submit,
+      isLoading,
+      toastError,
+      toastSuccess,
+    };
   },
 };
 </script>
@@ -28,6 +88,7 @@ export default {
       </div>
 
       <form
+        @submit.prevent="submit"
         action=""
         class="rounded-lg p-4 shadow-xl mx-auto mb-0 mt-8 max-w-md space-y-8"
       >
@@ -40,6 +101,7 @@ export default {
 
           <div class="relative">
             <input
+              v-model="dataUser.email"
               type="email"
               class="w-full rounded-lg border-gray-700 p-4 pe-12 text-sm shadow-sm bg-gray-800 text-gray-200"
               id="email"
@@ -73,6 +135,7 @@ export default {
 
           <div class="relative">
             <input
+              v-model="dataUser.password"
               type="password"
               class="w-full rounded-lg border-gray-700 p-4 pe-12 text-sm shadow-sm bg-gray-800 text-gray-200"
               id="password"
@@ -130,7 +193,11 @@ export default {
         </router-link>
       </form>
     </div>
-
+    <div v-if="isLoading" class="lds-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <!-- Image -->
     <div class="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">
       <img
@@ -143,4 +210,42 @@ export default {
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: #fff;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+</style>

@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "animate.css": "^4.1.1",
+    "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "esbuild": "^0.19.9",
     "express": "^4.18.2",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
@@ -22,7 +24,8 @@
     "nodemon": "^3.0.1",
     "sequelize": "^6.33.0",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue3-toastify": "^0.1.14"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

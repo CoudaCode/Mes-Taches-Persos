@@ -51,7 +51,9 @@ export default {
 </script>
 <template>
   <div class="bg-gray-900 h-full">
-    <header class="mt-10 pt-8 animate__animated animate__fadeIn">
+    <header
+      class="mt-10 pt-8 animate__animated animate__fadeInDown animate__delay-2s"
+    >
       <div
         class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 bg-gray-800 w-4/5 rounded-xl"
       >

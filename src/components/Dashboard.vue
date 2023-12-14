@@ -24,7 +24,7 @@ export default {
         });
 
         console.log(data);
-        if (data) {
+        if (data && data.message) {
           dataUser.value = { ...data.message };
         } else {
           router.push("/login");

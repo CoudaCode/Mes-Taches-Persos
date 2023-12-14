@@ -1,14 +1,44 @@
 <script>
+import { link } from "./../assets/url.js";
+import { onMounted, ref } from "vue";
+import VueCookies from "vue-cookies";
+import axios from "axios";
 export default {
   setup() {
-    // Vérifiez si le cookie 'token' est présent dans la réponse
-    const token = response.headers["set-cookie"]
-      .find((cookie) => cookie.startsWith("token="))
-      .split(";")[0]
-      .split("=")[1];
+    let dataUser = ref({});
+    const getUser = async (key) => {
+      try {
+        const id = localStorage.getItem("connect"); // Utilisez getItem au lieu de setItem
+        console.log("id", id);
+        console.log("token", key);
 
-    console.log(token);
-    return {};
+        const { data } = await axios.get(`${link}/api/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${key}`,
+            Accept: "application/json",
+          },
+        });
+
+        console.log(data);
+
+        dataUser = { ...data.message };
+
+        console.log(dataUser);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des données utilisateur :",
+          error,
+        );
+      }
+    };
+    onMounted(() => {
+      const token = VueCookies.get("token");
+      getUser(token);
+    });
+
+    return {
+      dataUser,
+    };
   },
 };
 </script>

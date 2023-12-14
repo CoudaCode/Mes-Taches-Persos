@@ -5,6 +5,7 @@ import { link } from "./../assets/url.js";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 import "vue3-toastify/dist/index.css";
+import VueCookies from "vue-cookies";
 export default {
   setup() {
     const isLoading = ref(false);
@@ -22,6 +23,8 @@ export default {
           dataUser.value,
         );
         console.log(data);
+        VueCookies.set("token", data.token, "20m");
+        localStorage.setItem("connect", JSON.stringify(data.message.id));
         toastSuccess("Bien connecté");
         dataUser.value = {
           email: "",
@@ -29,14 +32,13 @@ export default {
         };
         router.push("/dashboard");
       } catch (error) {
-        console.error("Erreur lors de la requête axios :", error);
-
-        toastError("Une erreur est survenue");
-        isLoading.value = false;
+        const response = error.response.data;
+        toastError(response.message);
       } finally {
         isLoading.value = false;
       }
     };
+    
     const toastConfig = {
       position: "bottom-left",
       hideProgressBar: false,

@@ -3,12 +3,16 @@ import { link } from "./../assets/url.js";
 import { onMounted, ref } from "vue";
 import VueCookies from "vue-cookies";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
 export default {
   setup() {
-    let dataUser = ref({});
+    const router = useRouter();
+    const dataUser = ref({});
+
     const getUser = async (key) => {
       try {
-        const id = localStorage.getItem("connect"); // Utilisez getItem au lieu de setItem
+        const id = localStorage.getItem("connect");
         console.log("id", id);
         console.log("token", key);
 
@@ -20,10 +24,12 @@ export default {
         });
 
         console.log(data);
-
-        dataUser = { ...data.message };
-
-        console.log(dataUser);
+        if (data) {
+          dataUser.value = { ...data.message };
+        } else {
+          router.push("/login");
+        }
+        console.log(dataUser.value);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur :",
@@ -31,6 +37,7 @@ export default {
         );
       }
     };
+
     onMounted(() => {
       const token = VueCookies.get("token");
       getUser(token);
@@ -42,126 +49,7 @@ export default {
   },
 };
 </script>
-
 <template>
-  <!--
-  <template>
-  <div class="flex flex-grow items-center justify-center bg-gray-900 h-full">
-    <div
-      class="max-w-full p-8 bg-gray-800 rounded-lg shadow-lg w-4/5 text-gray-200"
-    >
-      <div class="flex items-center mb-6">
-        <h4 class="font-semibold ml-3 text-lg">Mes Taches à faire</h4>
-      </div>
-      <div class="list">
-       <div class="flex gap-5 w-4/5">
-          <div class="flex w-3/5">
-            <input class="hidden" type="checkbox" id="task_6" checked />
-            <label
-              class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-900"
-              for="task_6">
-              <span
-                class="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-500 rounded-full">
-                <svg
-                  class="w-4 h-4 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd" />
-                </svg>
-              </span>
-              <span class="ml-4 text-sm">Trim the verge</span>
-            </label>
-          </div>
-          <div class="w-2/5 flex justify-end">
-            <button
-              class="py-2 px-4 ml-5 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
-              update
-            </button>
-            <button
-              class="py-2 px-4 bg-orange-500 ml-5 text-white font-semibold rounded-lg shadow-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75">
-              delete
-            </button>
-          </div>
-        </div>
-        <div class="flex gap-5 w-4/5">
-          <div class="flex w-3/5">
-            <input class="hidden" type="checkbox" id="task_7" checked />
-            <label
-              class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-900"
-              for="task_7">
-              <span
-                class="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-500 rounded-full">
-                <svg
-                  class="w-4 h-4 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd" />
-                </svg>
-              </span>
-              <span class="ml-4 text-sm">Trim the verge</span>
-            </label>
-          </div>
-          <div class="w-2/5 flex justify-end">
-            <button
-              class="py-2 px-4 ml-5 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
-              update
-            </button>
-            <button
-              class="py-2 px-4 bg-orange-500 ml-5 text-white font-semibold rounded-lg shadow-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75">
-              delete
-            </button>
-          </div>
-        </div> 
-      </div>
-      <div class="flex gap-5 w-4/5">
-        <div class="flex w-4/5">
-          <div
-            class="flex items-center w-full h-8 px-2 mt-2 text-sm font-medium rounded"
-          >
-            <svg
-              class="w-5 h-5 text-gray-400 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-            <input
-              class="flex-grow h-8 ml-4 bg-transparent focus:outline-none font-medium"
-              type="text"
-              placeholder="ajouter une nouvelle tâche"
-            />
-          </div>
-        </div>
-        <div class="w-1/5 m-2 flex justify-end">
-          <button
-            class="py-2 px-4 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75"
-          >
-            Ajouter
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  
-</template>
-  -->
   <div class="bg-gray-900 h-full">
     <header class="mt-10 pt-8">
       <div
@@ -252,11 +140,11 @@ export default {
               />
 
               <p class="ms-2 hidden text-left text-xs sm:block">
-                <strong class="block font-medium text-white"
-                  >Eric Frusciante</strong
-                >
+                <strong class="block font-medium text-white">{{
+                  dataUser.fullname
+                }}</strong>
 
-                <span class="text-gray-500"> eric@frusciante.com </span>
+                <span class="text-gray-500"> {{ dataUser.email }} </span>
               </p>
 
               <svg
@@ -277,7 +165,7 @@ export default {
 
         <div class="mt-8">
           <h1 class="text-2xl font-bold text-gray-100 sm:text-3xl">
-            Welcome back, Barry!
+            Welcome back, {{ dataUser.fullname }}
           </h1>
 
           <p class="mt-1.5 text-sm text-gray-500">

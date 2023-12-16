@@ -23,6 +23,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
+    "rippleui": "^1.12.1",
     "sequelize": "^6.33.0",
     "vue": "^3.3.4",
     "vue-cookies": "^1.8.3",

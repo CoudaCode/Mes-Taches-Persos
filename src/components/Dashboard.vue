@@ -177,6 +177,46 @@ export default {
         </div>
       </div>
     </header>
+    <section
+      class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 bg-gray-800 w-4/5 rounded-xl mt-8"
+    >
+      <form @submit.prevent="addTask">
+        <div class="flex items-center mb-4">
+          <input
+            v-model="newTask"
+            type="text"
+            placeholder="Ajouter une nouvelle tâche..."
+            class="flex-1 p-2 rounded-l-md bg-white text-gray-800"
+          />
+          <input
+            v-model="taskDate"
+            type="time"
+            class="p-2 rounded-r-md bg-white text-gray-800"
+          />
+          <button
+            type="submit"
+            class="bg-blue-500 text-white p-2 rounded-r-md hover:bg-blue-600"
+          >
+            Ajouter
+          </button>
+        </div>
+      </form>
+      <div class="mt-4">
+        <h2 class="text-lg font-bold text-gray-100 mb-2">Tâches créées :</h2>
+        <ul class="list-disc list-inside">
+          <li class="text-white">
+            {{ task.name }} - {{ task.date }}
+            <button class="btn bg-red-800">
+              Modifier
+            </button>
+            <button class="btn bg-green-400 ml-2">
+              Supprimer
+            </button>
+          </li>
+         
+        </ul>
+      </div>
+    </section>
   </div>
 </template>
 <style>

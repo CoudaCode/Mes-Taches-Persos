@@ -19,7 +19,7 @@ export default {
       try {
         isLoading.value = true;
         const { data } = await axios.post(`${link}/api/users`, dataUser.value);
-        console.log(data);
+
         toastSuccess("Compte créé avec succès");
         dataUser.value = {
           fullname: "",
@@ -68,27 +68,27 @@ export default {
 
 <template>
   <section
-    class="relative flex flex-wrap lg:h-screen lg:items-center bg-gray-900"
+    class="relative flex flex-wrap bg-gray-900 lg:h-screen lg:items-center"
   >
     <!-- Image -->
-    <div class="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">
+    <div class="relative w-full h-64 sm:h-96 lg:h-full lg:w-1/2">
       <img
         alt="Bienvenue"
         src="https://images.pexels.com/photos/1059383/pexels-photo-1059383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        class="absolute inset-0 h-full w-full object-cover"
+        class="absolute inset-0 object-cover w-full h-full"
       />
     </div>
     <!-- / Image -->
     <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
-      <div class="mx-auto max-w-lg text-center">
+      <div class="max-w-lg mx-auto text-center">
         <h1
-          class="text-center text-2xl font-bold text-orange-600 sm:text-3xl animate__animated animate__fadeInDown"
+          class="text-2xl font-bold text-center text-orange-600 sm:text-3xl animate__animated animate__fadeInDown"
         >
           Rejoignez-nous dès aujourd'hui
         </h1>
 
         <p
-          class="mx-auto mt-4 max-w-md text-center text-gray-300 animate__animated animate__fadeInUp"
+          class="max-w-md mx-auto mt-4 text-center text-gray-300 animate__animated animate__fadeInUp"
         >
           Créez votre compte pour bénéficier de toutes les fonctionnalités.
         </p>
@@ -97,9 +97,9 @@ export default {
       <form
         @submit.prevent="submit"
         action=""
-        class="rounded-lg p-4 shadow-lg mx-auto mb-0 mt-8 max-w-md space-y-4"
+        class="max-w-md p-4 mx-auto mt-8 mb-0 space-y-4 rounded-lg shadow-lg"
       >
-        <p class="text-center text-lg font-medium text-orange-600">
+        <p class="text-lg font-medium text-center text-orange-600">
           Créer un nouveau compte
         </p>
 
@@ -111,7 +111,7 @@ export default {
             type="text"
             id="fullname"
             name="fullname"
-            class="w-full rounded-lg border-gray-700 p-4 pe-12 text-sm shadow-sm bg-gray-800 text-gray-200"
+            class="w-full p-4 text-sm text-gray-200 bg-gray-800 border-gray-700 rounded-lg shadow-sm pe-12"
             placeholder="Entrez votre nom complet"
           />
         </div>
@@ -123,7 +123,7 @@ export default {
             type="email"
             id="email"
             name="email"
-            class="w-full rounded-lg border-gray-700 p-4 pe-12 text-sm shadow-sm bg-gray-800 text-gray-200"
+            class="w-full p-4 text-sm text-gray-200 bg-gray-800 border-gray-700 rounded-lg shadow-sm pe-12"
             placeholder="Entrez votre email"
           />
         </div>
@@ -136,36 +136,39 @@ export default {
             type="password"
             id="password"
             name="password"
-            class="w-full rounded-lg border-gray-700 p-4 pe-12 text-sm shadow-sm bg-gray-800 text-gray-200"
+            class="w-full p-4 text-sm text-gray-200 bg-gray-800 border-gray-700 rounded-lg shadow-sm pe-12"
             placeholder="Entrez votre mot de passe"
           />
         </div>
 
         <button
           type="submit"
-          class="block w-full rounded-lg bg-orange-600 px-5 py-3 text-sm font-medium text-white"
+          class="block w-full px-5 py-3 text-sm font-medium text-white bg-orange-600 rounded-lg"
         >
           Inscription
         </button>
 
-        <p class="text-center text-sm text-gray-500">
+        <p class="text-sm text-center text-gray-500">
           Vous avez déjà un compte ?
           <router-link to="/login" class="underline">Connexion</router-link>
         </p>
 
+        <div
+          v-if="isLoading"
+          class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75"
+        >
+          <div
+            class="w-16 h-16 border-t-8 border-blue-500 border-solid rounded-full animate-spin"
+          ></div>
+        </div>
         <!-- Bouton de retour à la page d'accueil -->
         <router-link
           to="/"
-          class="block w-full mt-4 rounded-lg bg-gray-200 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-300"
+          class="block w-full px-5 py-3 mt-4 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
         >
           Retour à la page d'accueil
         </router-link>
       </form>
-      <div v-if="isLoading" class="lds-facebook">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
     </div>
   </section>
 </template>

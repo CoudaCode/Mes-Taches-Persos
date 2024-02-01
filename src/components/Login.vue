@@ -20,9 +20,8 @@ export default {
         isLoading.value = true;
         const { data } = await axios.post(
           `${link}/api/users/login`,
-          dataUser.value,
+          dataUser.value
         );
-        console.log(data);
         VueCookies.set("token", data.token, "20m");
         localStorage.setItem("connect", JSON.stringify(data.message.id));
         toastSuccess("Bien connecté");
@@ -38,7 +37,7 @@ export default {
         isLoading.value = false;
       }
     };
-    
+
     const toastConfig = {
       position: "bottom-left",
       hideProgressBar: false,
@@ -70,20 +69,20 @@ export default {
 
 <template>
   <section
-    class="relative flex flex-wrap lg:h-screen lg:items-center bg-gray-900"
+    class="relative flex flex-wrap bg-gray-900 lg:h-screen lg:items-center"
   >
     <div
-      class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24 bg-gray-900"
+      class="w-full px-4 py-12 bg-gray-900 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24"
     >
-      <div class="mx-auto max-w-lg text-center">
+      <div class="max-w-lg mx-auto text-center">
         <h1
-          class="text-center text-2xl font-bold text-orange-600 sm:text-3xl animate__animated animate__fadeInDown"
+          class="text-2xl font-bold text-center text-orange-600 sm:text-3xl animate__animated animate__fadeInDown"
         >
           Commencez dès aujourd'hui
         </h1>
 
         <p
-          class="mx-auto mt-4 max-w-md text-center text-gray-300 animate__animated animate__fadeInUp"
+          class="max-w-md mx-auto mt-4 text-center text-gray-300 animate__animated animate__fadeInUp"
         >
           Simplifiez votre vie quotidienne en vous connectant à votre compte.
         </p>
@@ -92,9 +91,9 @@ export default {
       <form
         @submit.prevent="submit"
         action=""
-        class="rounded-lg p-4 shadow-xl mx-auto mb-0 mt-8 max-w-md space-y-8"
+        class="max-w-md p-4 mx-auto mt-8 mb-0 space-y-8 rounded-lg shadow-xl"
       >
-        <p class="text-center text-lg font-medium text-orange-600">
+        <p class="text-lg font-medium text-center text-orange-600">
           Connectez-vous à votre compte
         </p>
 
@@ -105,18 +104,18 @@ export default {
             <input
               v-model="dataUser.email"
               type="email"
-              class="w-full rounded-lg border-gray-700 p-4 pe-12 text-sm shadow-sm bg-gray-800 text-gray-200"
+              class="w-full p-4 text-sm text-gray-200 bg-gray-800 border-gray-700 rounded-lg shadow-sm pe-12"
               id="email"
               name="email"
               placeholder="Entrez votre email"
             />
 
             <span
-              class="absolute inset-y-0 end-0 grid place-content-center px-4"
+              class="absolute inset-y-0 grid px-4 end-0 place-content-center"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 text-gray-400"
+                class="w-4 h-4 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -131,7 +130,14 @@ export default {
             </span>
           </div>
         </div>
-
+        <div
+          v-if="isLoading"
+          class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75"
+        >
+          <div
+            class="w-16 h-16 border-t-8 border-blue-500 border-solid rounded-full animate-spin"
+          ></div>
+        </div>
         <div>
           <label for="password" class="sr-only">Mot de passe</label>
 
@@ -139,18 +145,18 @@ export default {
             <input
               v-model="dataUser.password"
               type="password"
-              class="w-full rounded-lg border-gray-700 p-4 pe-12 text-sm shadow-sm bg-gray-800 text-gray-200"
+              class="w-full p-4 text-sm text-gray-200 bg-gray-800 border-gray-700 rounded-lg shadow-sm pe-12"
               id="password"
               name="password"
               placeholder="Entrez votre mot de passe"
             />
 
             <span
-              class="absolute inset-y-0 end-0 grid place-content-center px-4"
+              class="absolute inset-y-0 grid px-4 end-0 place-content-center"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 text-gray-400"
+                class="w-4 h-4 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -174,12 +180,12 @@ export default {
 
         <button
           type="submit"
-          class="block w-full rounded-lg bg-orange-600 px-5 py-3 text-sm font-medium text-white"
+          class="block w-full px-5 py-3 text-sm font-medium text-white bg-orange-600 rounded-lg"
         >
           Connexion
         </button>
 
-        <p class="text-center text-sm text-gray-500">
+        <p class="text-sm text-center text-gray-500">
           Vous n'avez pas de compte ?
           <router-link to="/register" class="underline"
             >Inscription</router-link
@@ -189,23 +195,19 @@ export default {
         <!-- Bouton de retour à la page d'accueil -->
         <router-link
           to="/"
-          class="block w-full mt-4 rounded-lg bg-gray-200 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-300"
+          class="block w-full px-5 py-3 mt-4 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
         >
           Retour à la page d'accueil
         </router-link>
       </form>
     </div>
-    <div v-if="isLoading" class="lds-facebook">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+
     <!-- Image -->
-    <div class="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">
+    <div class="relative w-full h-64 sm:h-96 lg:h-full lg:w-1/2">
       <img
         alt="Bienvenue"
         src="https://images.pexels.com/photos/5717422/pexels-photo-5717422.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        class="absolute inset-0 h-full w-full object-cover"
+        class="absolute inset-0 object-cover w-full h-full"
       />
     </div>
     <!-- / Image -->

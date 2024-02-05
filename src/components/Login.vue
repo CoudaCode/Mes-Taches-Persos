@@ -20,7 +20,10 @@ export default {
         isLoading.value = true;
         const { data } = await axios.post(
           `${link}/api/users/login`,
-          dataUser.value
+          dataUser.value,
+          {
+            withCredentials: true,
+          }
         );
         VueCookies.set("token", data.token, "20m");
         localStorage.setItem("connect", JSON.stringify(data.message.id));

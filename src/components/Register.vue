@@ -1,10 +1,10 @@
 <script>
 import axios from "axios";
 import { ref } from "vue";
-import { link } from "./../assets/url.js";
-import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import { link } from "./../assets/url.js";
 export default {
   setup() {
     const isLoading = ref(false);
@@ -18,7 +18,9 @@ export default {
     const submit = async () => {
       try {
         isLoading.value = true;
-        const { data } = await axios.post(`${link}/api/users`, dataUser.value);
+        const { data } = await axios.post(`${link}/api/users`, dataUser.value, {
+          withCredentials: true,
+        });
 
         toastSuccess("Compte créé avec succès");
         dataUser.value = {
